@@ -1,12 +1,16 @@
-import sqlite3
+from flask import Flask, render_template
 
-# Conexión a la base de datos SQLite (creará la base de datos si no existe)
-conn = sqlite3.connect('mi_base_de_datos.db')
-cursor = conn.cursor()
+app = Flask(__name__)
 
-# Realiza consultas SQL según sea necesario
-cursor.execute("SELECT * FROM personas")
-datos = cursor.fetchall()
+@app.route('/')
+def mostrar_datos():
+    conn = sqlite.connect('estudiantes.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM estudiantes")
+    datos = cursor.fetchall()
+    conn.close()
 
-# Cierra la conexión
-conn.close()
+    return render_template('index.html', datos=datos)
+
+if __name__ == '__main__':
+    app.run(debug=True)
